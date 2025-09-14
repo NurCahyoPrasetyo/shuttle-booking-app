@@ -1,0 +1,76 @@
+{
+  "schedules": [
+    {
+      "id": "JKT-BDG-0800-Blue",
+      "operator": "Blue Shuttle",
+      "origin": "Jakarta",
+      "destination": "Bandung",
+      "departures": ["08:00", "13:00", "19:00"],
+      "price": 120000
+    },
+    {
+      "id": "JKT-BDG-0900-TravelX",
+      "operator": "TravelX",
+      "origin": "Jakarta",
+      "destination": "Bandung",
+      "departures": ["09:00", "14:00", "20:00"],
+      "price": 110000
+    },
+    {
+      "id": "BDG-JKT-0700-Blue",
+      "operator": "Blue Shuttle",
+      "origin": "Bandung",
+      "destination": "Jakarta",
+      "departures": ["07:00", "12:00", "18:00"],
+      "price": 120000
+    },
+    {
+      "id": "BDG-SBY-0900-TravelX",
+      "operator": "TravelX",
+      "origin": "Bandung",
+      "destination": "Surabaya",
+      "departures": ["09:00", "15:00"],
+      "price": 180000
+    },
+    {
+      "id": "SBY-BDG-0800-CityTrans",
+      "operator": "CityTrans",
+      "origin": "Surabaya",
+      "destination": "Bandung",
+      "departures": ["08:00", "14:00"],
+      "price": 180000
+    },
+    {
+      "id": "JKT-SBY-0700-CityTrans",
+      "operator": "CityTrans",
+      "origin": "Jakarta",
+      "destination": "Surabaya",
+      "departures": ["07:00", "12:00", "18:00"],
+      "price": 200000
+    },
+    {
+      "id": "SBY-JKT-0600-CityTrans",
+      "operator": "CityTrans",
+      "origin": "Surabaya",
+      "destination": "Jakarta",
+      "departures": ["06:00", "11:00", "17:00"],
+      "price": 200000
+    },
+    {
+      "id": "JKT-BDG-1000-Express",
+      "operator": "Express Shuttle",
+      "origin": "Jakarta",
+      "destination": "Bandung",
+      "departures": ["10:00", "16:00"],
+      "price": 150000
+    },
+    {
+      "id": "BDG-SBY-0700-Express",
+      "operator": "Express Shuttle",
+      "origin": "Bandung",
+      "destination": "Surabaya",
+      "departures": ["07:00", "13:00"],
+      "price": 190000
+    }
+  ]
+}
