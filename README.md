@@ -31,14 +31,14 @@ Aplikasi Single Page Application (SPA) untuk pemesanan shuttle online yang mengh
 
 ### 1. Clone Repository
 
-\`\`\`bash
+```bash
 git clone [<repository-url>](https://github.com/NurCahyoPrasetyo/shuttle-booking-app.git)
 cd shuttle-booking-app
-\`\`\`
+```
 
 ### 2. Install Dependencies
 
-\`\`\`bash
+```bash
 npm install
 
 # atau
@@ -48,11 +48,11 @@ yarn install
 # atau
 
 pnpm install
-\`\`\`
+```
 
 ### 3. Jalankan Development Server
 
-\`\`\`bash
+```bash
 npm run dev
 
 # atau
@@ -62,7 +62,7 @@ yarn dev
 # atau
 
 pnpm dev
-\`\`\`
+```
 
 ### 4. Buka Browser
 
@@ -77,7 +77,7 @@ Development server akan berjalan dengan fitur:
 
 ## 📁 Struktur Folder
 
-\`\`\`
+```
 shuttle-booking-app/
 ├── app/ # Next.js App Router
 │ ├── globals.css # Global styles & Tailwind config
@@ -99,7 +99,7 @@ shuttle-booking-app/
 │ └── data/
 │ └── shuttles.json # Data shuttle dan jadwal
 └── README.md # Dokumentasi project
-\`\`\`
+```
 
 ## 📝 Catatan Keputusan Teknis & Asumsi
 
@@ -133,7 +133,7 @@ shuttle-booking-app/
 
 File `public/data/shuttles.json` berisi data shuttle yang dapat diakses melalui fetch API. Struktur data:
 
-\`\`\`json
+```json
 {
 "schedules": [
 {
@@ -148,13 +148,14 @@ File `public/data/shuttles.json` berisi data shuttle yang dapat diakses melalui 
 }
 ]
 }
-\`\`\`
+```
 
 **Akses Data**: File dapat diakses melalui `/data/shuttles.json` endpoint dan di-fetch menggunakan:
-\`\`\`javascript
-const response = await fetch('/data/shuttles.json');
+
+```javascript
+const response = await fetch("/data/shuttles.json");
 const data = await response.json();
-\`\`\`
+```
 
 ## 🎯 Cara Menggunakan Aplikasi
 
@@ -215,14 +216,14 @@ Edit komponen `components/search-form.tsx` untuk menambah aturan validasi baru.
 
 ### Vercel (Recommended)
 
-\`\`\`bash
+```bash
 npm run build
 vercel --prod
-\`\`\`
+```
 
 ### Manual Build
 
-\`\`\`bash
+```bash
 npm run build
 npm start
-\`\`\`
+```
