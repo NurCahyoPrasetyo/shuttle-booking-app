@@ -228,6 +228,6 @@ npm run build
 npm start
 ```
 
-### Other
+## Other
 
 [soal-front-end-developer-sep2025](https://bhisa.id/uploads/pdf/soal-front-end-developer-sep2025.html)
