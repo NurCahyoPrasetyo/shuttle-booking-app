@@ -5,25 +5,42 @@
 
 :root {
   /* Updated color tokens to match shuttle booking app design brief */
-  --background: oklch(1 0 0); /* #ffffff */
-  --foreground: oklch(0.314 0.012 258.338); /* #4b5563 */
-  --card: oklch(0.985 0.008 85.873); /* #fffbeb */
-  --card-foreground: oklch(0.314 0.012 258.338); /* #4b5563 */
-  --popover: oklch(1 0 0); /* #ffffff */
-  --popover-foreground: oklch(0.314 0.012 258.338); /* #4b5563 */
-  --primary: oklch(0.647 0.167 41.69); /* #ea580c */
-  --primary-foreground: oklch(1 0 0); /* #ffffff */
-  --secondary: oklch(0.708 0.17 41.69); /* #f97316 */
-  --secondary-foreground: oklch(1 0 0); /* #ffffff */
-  --muted: oklch(0.985 0.002 106.423); /* #f8fafc */
-  --muted-foreground: oklch(0.314 0.012 258.338); /* #4b5563 */
-  --accent: oklch(0.708 0.17 41.69); /* #f97316 */
-  --accent-foreground: oklch(1 0 0); /* #ffffff */
+  --background: oklch(1 0 0);
+  /* #ffffff */
+  --foreground: oklch(0.314 0.012 258.338);
+  /* #4b5563 */
+  --card: oklch(0.985 0.008 85.873);
+  /* #fffbeb */
+  --card-foreground: oklch(0.314 0.012 258.338);
+  /* #4b5563 */
+  --popover: oklch(1 0 0);
+  /* #ffffff */
+  --popover-foreground: oklch(0.314 0.012 258.338);
+  /* #4b5563 */
+  --primary: oklch(0.647 0.167 41.69);
+  /* #ea580c */
+  --primary-foreground: oklch(1 0 0);
+  /* #ffffff */
+  --secondary: oklch(0.708 0.17 41.69);
+  /* #f97316 */
+  --secondary-foreground: oklch(1 0 0);
+  /* #ffffff */
+  --muted: oklch(0.985 0.002 106.423);
+  /* #f8fafc */
+  --muted-foreground: oklch(0.314 0.012 258.338);
+  /* #4b5563 */
+  --accent: oklch(0.708 0.17 41.69);
+  /* #f97316 */
+  --accent-foreground: oklch(1 0 0);
+  /* #ffffff */
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(1 0 0);
-  --border: oklch(0.831 0.007 197.137); /* #d1d5db */
-  --input: oklch(1 0 0); /* #ffffff */
-  --ring: oklch(0.647 0.167 41.69 / 0.5); /* rgba(234, 88, 12, 0.5) */
+  --border: oklch(0.831 0.007 197.137);
+  /* #d1d5db */
+  --input: oklch(1 0 0);
+  /* #ffffff */
+  --ring: oklch(0.647 0.167 41.69 / 0.5);
+  /* rgba(234, 88, 12, 0.5) */
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.314 0.012 258.338);
   --chart-3: oklch(0.708 0.17 41.69);
@@ -120,6 +137,7 @@
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
   }

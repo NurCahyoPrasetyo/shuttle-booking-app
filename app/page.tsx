@@ -1,11 +1,16 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { SearchForm } from "@/components/search-form"
-import { ShuttleList } from "@/components/shuttle-list"
-import { BookingSummary } from "@/components/booking-summary"
-import { BookingConfirmation } from "@/components/booking-confirmation"
-import type { BookingState, SearchFormData, ShuttleSchedule, SelectedTrip } from "@/lib/types"
+import { BookingConfirmation } from "@/components/booking-confirmation";
+import { BookingSummary } from "@/components/booking-summary";
+import { SearchForm } from "@/components/search-form";
+import { ShuttleList } from "@/components/shuttle-list";
+import type {
+  BookingState,
+  SearchFormData,
+  SelectedTrip,
+  ShuttleSchedule,
+} from "@/lib/types";
+import { useState } from "react";
 
 export default function HomePage() {
   const [bookingState, setBookingState] = useState<BookingState>({
@@ -14,56 +19,62 @@ export default function HomePage() {
     selectedTrip: null,
     isLoading: false,
     error: null,
-  })
+  });
 
-  const [currentStep, setCurrentStep] = useState<"search" | "results" | "summary" | "confirmation">("search")
+  const [currentStep, setCurrentStep] = useState<
+    "search" | "results" | "summary" | "confirmation"
+  >("search");
 
   const handleSearch = async (searchData: SearchFormData) => {
-    setBookingState((prev) => ({ ...prev, isLoading: true, error: null }))
+    setBookingState((prev) => ({ ...prev, isLoading: true, error: null }));
 
     try {
-      const response = await fetch("/data/shuttles.json")
-      if (!response.ok) throw new Error("Gagal memuat data shuttle")
+      const response = await fetch("/data/shuttles.json");
+      if (!response.ok) throw new Error("Gagal memuat data shuttle");
 
-      const data = await response.json()
+      const data = await response.json();
       const filteredSchedules = data.schedules.filter(
         (schedule: ShuttleSchedule) =>
-          schedule.origin === searchData.origin && schedule.destination === searchData.destination,
-      )
+          schedule.origin === searchData.origin &&
+          schedule.destination === searchData.destination
+      );
 
       setBookingState((prev) => ({
         ...prev,
         searchData,
         availableSchedules: filteredSchedules,
         isLoading: false,
-      }))
-      setCurrentStep("results")
+      }));
+      setCurrentStep("results");
     } catch (error) {
       setBookingState((prev) => ({
         ...prev,
         error: "Terjadi kesalahan saat memuat data. Silakan coba lagi.",
         isLoading: false,
-      }))
+      }));
     }
-  }
+  };
 
-  const handleSelectTrip = (schedule: ShuttleSchedule, departureTime: string) => {
-    if (!bookingState.searchData) return
+  const handleSelectTrip = (
+    schedule: ShuttleSchedule,
+    departureTime: string
+  ) => {
+    if (!bookingState.searchData) return;
 
     const selectedTrip: SelectedTrip = {
       schedule,
       departureTime,
       passengerName: bookingState.searchData.passengerName,
       departureDate: bookingState.searchData.departureDate,
-    }
+    };
 
-    setBookingState((prev) => ({ ...prev, selectedTrip }))
-    setCurrentStep("summary")
-  }
+    setBookingState((prev) => ({ ...prev, selectedTrip }));
+    setCurrentStep("summary");
+  };
 
   const handleConfirmBooking = () => {
-    setCurrentStep("confirmation")
-  }
+    setCurrentStep("confirmation");
+  };
 
   const handleNewSearch = () => {
     setBookingState({
@@ -72,16 +83,20 @@ export default function HomePage() {
       selectedTrip: null,
       isLoading: false,
       error: null,
-    })
-    setCurrentStep("search")
-  }
+    });
+    setCurrentStep("search");
+  };
 
   return (
     <div className="min-h-screen bg-background">
       <header className="bg-primary text-primary-foreground py-6">
         <div className="container mx-auto px-4">
-          <h1 className="text-2xl md:text-3xl font-bold text-center">Shuttle Booking Online</h1>
-          <p className="text-center mt-2 text-primary-foreground/90">Pesan shuttle Jakarta • Bandung • Surabaya</p>
+          <h1 className="text-2xl md:text-3xl font-bold text-center">
+            Shuttle Booking Online
+          </h1>
+          <p className="text-center mt-2 text-primary-foreground/90">
+            Pesan shuttle Jakarta • Bandung • Surabaya
+          </p>
         </div>
       </header>
 
@@ -94,7 +109,11 @@ export default function HomePage() {
         </div>
 
         {currentStep === "search" && (
-          <SearchForm onSearch={handleSearch} isLoading={bookingState.isLoading} error={bookingState.error} />
+          <SearchForm
+            onSearch={handleSearch}
+            isLoading={bookingState.isLoading}
+            error={bookingState.error}
+          />
         )}
 
         {currentStep === "results" && (
@@ -115,15 +134,18 @@ export default function HomePage() {
         )}
 
         {currentStep === "confirmation" && bookingState.selectedTrip && (
-          <BookingConfirmation selectedTrip={bookingState.selectedTrip} onNewSearch={handleNewSearch} />
+          <BookingConfirmation
+            selectedTrip={bookingState.selectedTrip}
+            onNewSearch={handleNewSearch}
+          />
         )}
       </main>
 
       <footer className="bg-muted mt-16 py-8">
         <div className="container mx-auto px-4 text-center text-muted-foreground">
-          <p>&copy; 2024 Shuttle Booking Online. Semua hak dilindungi.</p>
+          <p>&copy; 2024 Shuttle Booking Online.</p>
         </div>
       </footer>
     </div>
-  )
+  );
 }

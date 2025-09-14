@@ -1,25 +1,37 @@
-"use client"
+"use client";
 
-import type React from "react"
+import type React from "react";
 
-import { useState, useEffect } from "react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Alert, AlertDescription } from "@/components/ui/alert"
-import { Loader2, MapPin, Calendar, User } from "lucide-react"
-import { getTodayISO } from "@/lib/utils/date"
-import type { SearchFormData } from "@/lib/types"
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import type { SearchFormData } from "@/lib/types";
+import { getTodayISO } from "@/lib/utils/date";
+import { Calendar, Loader2, MapPin, User } from "lucide-react";
+import { useEffect, useState } from "react";
 
 interface SearchFormProps {
-  onSearch: (data: SearchFormData) => void
-  isLoading: boolean
-  error: string | null
+  onSearch: (data: SearchFormData) => void;
+  isLoading: boolean;
+  error: string | null;
 }
 
-const cities = ["Jakarta", "Bandung", "Surabaya"]
+const cities = ["Jakarta", "Bandung", "Surabaya"];
 
 export function SearchForm({ onSearch, isLoading, error }: SearchFormProps) {
   const [formData, setFormData] = useState<SearchFormData>({
@@ -27,60 +39,61 @@ export function SearchForm({ onSearch, isLoading, error }: SearchFormProps) {
     origin: "",
     destination: "",
     departureDate: "",
-  })
+  });
 
-  const [errors, setErrors] = useState<Partial<SearchFormData>>({})
-  const [isFormValid, setIsFormValid] = useState(false)
+  const [errors, setErrors] = useState<Partial<SearchFormData>>({});
+  const [isFormValid, setIsFormValid] = useState(false);
 
   // Load saved data from localStorage on mount
   useEffect(() => {
-    const savedData = localStorage.getItem("shuttleSearchData")
+    const savedData = localStorage.getItem("shuttleSearchData");
     if (savedData) {
       try {
-        const parsed = JSON.parse(savedData)
-        setFormData(parsed)
+        const parsed = JSON.parse(savedData);
+        setFormData(parsed);
       } catch (error) {
-        console.error("Failed to parse saved search data:", error)
+        console.error("Failed to parse saved search data:", error);
       }
     }
-  }, [])
+  }, []);
 
   // Save to localStorage whenever form data changes
   useEffect(() => {
-    localStorage.setItem("shuttleSearchData", JSON.stringify(formData))
-  }, [formData])
+    localStorage.setItem("shuttleSearchData", JSON.stringify(formData));
+  }, [formData]);
 
   // Validate form whenever data changes
   useEffect(() => {
-    const newErrors: Partial<SearchFormData> = {}
+    const newErrors: Partial<SearchFormData> = {};
 
     if (!formData.passengerName.trim()) {
-      newErrors.passengerName = "Nama penumpang wajib diisi"
+      newErrors.passengerName = "Nama penumpang wajib diisi";
     }
 
     if (!formData.origin) {
-      newErrors.origin = "Kota asal wajib dipilih"
+      newErrors.origin = "Kota asal wajib dipilih";
     }
 
     if (!formData.destination) {
-      newErrors.destination = "Kota tujuan wajib dipilih"
+      newErrors.destination = "Kota tujuan wajib dipilih";
     } else if (formData.origin === formData.destination) {
-      newErrors.destination = "Kota tujuan harus berbeda dengan kota asal"
+      newErrors.destination = "Kota tujuan harus berbeda dengan kota asal";
     }
 
     if (!formData.departureDate) {
-      newErrors.departureDate = "Tanggal keberangkatan wajib dipilih"
+      newErrors.departureDate = "Tanggal keberangkatan wajib dipilih";
     } else if (formData.departureDate < getTodayISO()) {
-      newErrors.departureDate = "Tanggal keberangkatan tidak boleh di masa lalu"
+      newErrors.departureDate =
+        "Tanggal keberangkatan tidak boleh di masa lalu";
     }
 
-    setErrors(newErrors)
-    setIsFormValid(Object.keys(newErrors).length === 0)
-  }, [formData])
+    setErrors(newErrors);
+    setIsFormValid(Object.keys(newErrors).length === 0);
+  }, [formData]);
 
   const handleInputChange = (field: keyof SearchFormData, value: string) => {
-    setFormData((prev) => ({ ...prev, [field]: value }))
-  }
+    setFormData((prev) => ({ ...prev, [field]: value }));
+  };
 
   const handleOriginChange = (value: string) => {
     setFormData((prev) => ({
@@ -88,26 +101,30 @@ export function SearchForm({ onSearch, isLoading, error }: SearchFormProps) {
       origin: value,
       // Reset destination if it's the same as new origin
       destination: prev.destination === value ? "" : prev.destination,
-    }))
-  }
+    }));
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
     if (isFormValid && !isLoading) {
-      onSearch(formData)
+      onSearch(formData);
     }
-  }
+  };
 
   const getAvailableDestinations = () => {
-    return cities.filter((city) => city !== formData.origin)
-  }
+    return cities.filter((city) => city !== formData.origin);
+  };
 
   return (
     <div className="max-w-2xl mx-auto">
       <Card className="shadow-lg">
         <CardHeader className="text-center">
-          <CardTitle className="text-2xl font-bold text-primary">Cari Shuttle</CardTitle>
-          <CardDescription>Isi form di bawah untuk mencari jadwal shuttle yang tersedia</CardDescription>
+          <CardTitle className="text-2xl font-bold text-primary">
+            Cari Shuttle
+          </CardTitle>
+          <CardDescription>
+            Isi form di bawah untuk mencari jadwal shuttle yang tersedia
+          </CardDescription>
         </CardHeader>
         <CardContent>
           {error && (
@@ -119,7 +136,10 @@ export function SearchForm({ onSearch, isLoading, error }: SearchFormProps) {
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Passenger Name */}
             <div className="space-y-2">
-              <Label htmlFor="passengerName" className="flex items-center gap-2">
+              <Label
+                htmlFor="passengerName"
+                className="flex items-center gap-2"
+              >
                 <User className="w-4 h-4" />
                 Nama Penumpang
               </Label>
@@ -128,12 +148,20 @@ export function SearchForm({ onSearch, isLoading, error }: SearchFormProps) {
                 type="text"
                 placeholder="Masukkan nama lengkap"
                 value={formData.passengerName}
-                onChange={(e) => handleInputChange("passengerName", e.target.value)}
+                onChange={(e) =>
+                  handleInputChange("passengerName", e.target.value)
+                }
                 className={errors.passengerName ? "border-destructive" : ""}
-                aria-describedby={errors.passengerName ? "passengerName-error" : undefined}
+                aria-describedby={
+                  errors.passengerName ? "passengerName-error" : undefined
+                }
               />
               {errors.passengerName && (
-                <p id="passengerName-error" className="text-sm text-destructive" role="alert">
+                <p
+                  id="passengerName-error"
+                  className="text-sm text-destructive"
+                  role="alert"
+                >
                   {errors.passengerName}
                 </p>
               )}
@@ -146,8 +174,14 @@ export function SearchForm({ onSearch, isLoading, error }: SearchFormProps) {
                   <MapPin className="w-4 h-4" />
                   Kota Asal
                 </Label>
-                <Select value={formData.origin} onValueChange={handleOriginChange}>
-                  <SelectTrigger id="origin" className={errors.origin ? "border-destructive" : ""}>
+                <Select
+                  value={formData.origin}
+                  onValueChange={handleOriginChange}
+                >
+                  <SelectTrigger
+                    id="origin"
+                    className={errors.origin ? "border-destructive" : ""}
+                  >
                     <SelectValue placeholder="Pilih kota asal" />
                   </SelectTrigger>
                   <SelectContent>
@@ -166,16 +200,24 @@ export function SearchForm({ onSearch, isLoading, error }: SearchFormProps) {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="destination" className="flex items-center gap-2">
+                <Label
+                  htmlFor="destination"
+                  className="flex items-center gap-2"
+                >
                   <MapPin className="w-4 h-4" />
                   Kota Tujuan
                 </Label>
                 <Select
                   value={formData.destination}
-                  onValueChange={(value) => handleInputChange("destination", value)}
+                  onValueChange={(value) =>
+                    handleInputChange("destination", value)
+                  }
                   disabled={!formData.origin}
                 >
-                  <SelectTrigger id="destination" className={errors.destination ? "border-destructive" : ""}>
+                  <SelectTrigger
+                    id="destination"
+                    className={errors.destination ? "border-destructive" : ""}
+                  >
                     <SelectValue placeholder="Pilih kota tujuan" />
                   </SelectTrigger>
                   <SelectContent>
@@ -196,7 +238,10 @@ export function SearchForm({ onSearch, isLoading, error }: SearchFormProps) {
 
             {/* Departure Date */}
             <div className="space-y-2">
-              <Label htmlFor="departureDate" className="flex items-center gap-2">
+              <Label
+                htmlFor="departureDate"
+                className="flex items-center gap-2"
+              >
                 <Calendar className="w-4 h-4" />
                 Tanggal Keberangkatan
               </Label>
@@ -205,19 +250,31 @@ export function SearchForm({ onSearch, isLoading, error }: SearchFormProps) {
                 type="date"
                 min={getTodayISO()}
                 value={formData.departureDate}
-                onChange={(e) => handleInputChange("departureDate", e.target.value)}
+                onChange={(e) =>
+                  handleInputChange("departureDate", e.target.value)
+                }
                 className={errors.departureDate ? "border-destructive" : ""}
-                aria-describedby={errors.departureDate ? "departureDate-error" : undefined}
+                aria-describedby={
+                  errors.departureDate ? "departureDate-error" : undefined
+                }
               />
               {errors.departureDate && (
-                <p id="departureDate-error" className="text-sm text-destructive" role="alert">
+                <p
+                  id="departureDate-error"
+                  className="text-sm text-destructive"
+                  role="alert"
+                >
                   {errors.departureDate}
                 </p>
               )}
             </div>
 
             {/* Submit Button */}
-            <Button type="submit" className="w-full py-6 text-lg font-semibold" disabled={!isFormValid || isLoading}>
+            <Button
+              type="submit"
+              className="w-full py-6 text-lg font-semibold"
+              disabled={!isFormValid || isLoading}
+            >
               {isLoading ? (
                 <>
                   <Loader2 className="w-5 h-5 mr-2 animate-spin" />
@@ -231,5 +288,5 @@ export function SearchForm({ onSearch, isLoading, error }: SearchFormProps) {
         </CardContent>
       </Card>
     </div>
-  )
+  );
 }

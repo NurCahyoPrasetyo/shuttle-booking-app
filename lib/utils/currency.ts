@@ -4,5 +4,5 @@ export function formatCurrency(amount: number): string {
     currency: "IDR",
     minimumFractionDigits: 0,
     maximumFractionDigits: 0,
-  }).format(amount)
+  }).format(amount);
 }
